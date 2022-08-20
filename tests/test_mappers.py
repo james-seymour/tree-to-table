@@ -15,6 +15,16 @@ class TestGetMapper:
         # TODO: Check types are working here correctly once implemented
         assert Get("key_2", Get("key_3"))(self.data) == "value_3"
 
+    def test_no_key_get(self):
+        assert Get("no_key_found")(self.data) == None
+
+    def test_multiple_no_key_get(self):
+        assert Get("no_key_found", Get("no_key_found"))(self.data) == None
+
+
+class TestGetDefaultMapper:
+    data: Data = {"key_1": "value_1", "key_2": {"key_3": "value_3"}}
+
 
 class TestApplyMapper:
     data: Data = "unwanted/value_1"
@@ -24,3 +34,9 @@ class TestApplyMapper:
             return value.split("/")[1]
 
         assert Apply(remove_unwanted)(self.data) == "value_1"
+
+    def test_simple_apply_2(self):
+        def return_hello(value: str):
+            return "hello"
+
+        assert Apply(return_hello)(self.data) == "hello"
