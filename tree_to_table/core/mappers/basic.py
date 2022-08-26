@@ -28,3 +28,23 @@ class Apply(Mapper):
 
     def run(self, obj: Any):
         return self.apply_fn(obj)
+
+
+class Choice(Mapper):
+    def __init__(self, chooser: Callable, next=identity):
+        self.chooser = chooser
+        super().__init__(next)
+
+    def run(self, obj):
+        if obj:
+            return self.chooser(obj)
+        return None
+
+
+class Replace(Mapper):
+    def __init__(self, replacement, next=identity) -> None:
+        self.replacement = replacement
+        super().__init__(next)
+
+    def run(self, _):
+        return self.replacement
