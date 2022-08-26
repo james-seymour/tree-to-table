@@ -1,3 +1,5 @@
+from .base import Mapper
+
 from .mappers import (
     Apply,
     Get,
