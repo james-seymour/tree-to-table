@@ -1,23 +1,23 @@
-from typing import Mapping, Callable, Any
-from .base import Mapper, identity
+from typing import Mapping, Callable, Any, Dict, Optional
+from .base import Mapper, identity, Source, Result, FinalResult
 
 
-class Get(Mapper):
+class Get(Mapper[Dict[str, Result], Result, FinalResult]):
     def __init__(self, key: str, next=identity):
         self.key = key
         super().__init__(next)
 
-    def run(self, obj: Mapping):
+    def apply(self, obj: Dict[str, Result]) -> Optional[Result]:
         return obj.get(self.key)
 
 
-class GetDefault(Mapper):
+class GetDefault(Mapper[Dict[str, Result], Result, FinalResult]):
     def __init__(self, key: str, default: Any, next=identity):
         self.key = key
         self.default = default
         super().__init__(next)
 
-    def run(self, obj: Mapping):
+    def apply(self, obj: Mapping):
         return obj.get(self.key, self.default)
 
 
