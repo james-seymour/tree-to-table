@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Mapping, Any, Union
-from tree_to_table.core.mappers import Get, Apply
+from tree_to_table.mappers import Get, Apply
 
 Data = Union[Any, Mapping[Any, Union[Any, "Data"]]]  # type: ignore
 
