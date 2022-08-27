@@ -22,4 +22,5 @@ class Table:
 
     @classmethod
     def transform(cls, data: Any):
+        "The main entrypoint for transforming a set of data"
         return cls._transform(cls.mappers(), data)
