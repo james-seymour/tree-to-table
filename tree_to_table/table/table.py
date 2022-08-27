@@ -13,7 +13,6 @@ class Table:
     _transform: Transform = OneToOneTransform()
 
     @classmethod
-    @property
     def mappers(cls) -> Dict[str, Mapper]:
         return {
             column_name: mapper
@@ -23,4 +22,4 @@ class Table:
 
     @classmethod
     def transform(cls, data: Any):
-        return cls._transform(cls.mappers, data)
+        return cls._transform(cls.mappers(), data)

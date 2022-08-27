@@ -1,6 +1,6 @@
 from typing import Dict, List
 
-from .mappers import Get, Apply, Choice
+from .mappers import Get, Apply, Choice, Mapper
 from .table import Table, Column
 from .transforms import one_to_many
 
@@ -17,9 +17,9 @@ def choose_participant(participant_id: str):
 # TODO: We could exhaust with zip, but we could also cross product on one to many
 # @one_to_many({"invoice_item": Get("service_id")})
 class Invoice(Table):
-    service_id = Get("service_id")
-    patient_id = Get("patient_id")
-    patient_name = Get(
+    service_id: Mapper = Get("service_id")
+    patient_id: Mapper = Get("patient_id")
+    patient_name: Mapper = Get(
         "charge_items", Choice(choose_participant("patient"), Get("name"))
     )
 
