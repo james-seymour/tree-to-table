@@ -61,6 +61,16 @@ class Replace(Mapper):
         return self.replacement
 
 
+class Index(Mapper):
+    def __init__(self, index: int, next=identity) -> None:
+        self.index = index
+        super().__init__(next)
+
+    def apply(self, obj):
+        if obj:
+            return obj.__getitem__(self.index)
+
+
 class Coalesce(Mapper):
     def __init__(self, *mappers):
         self.mappers = mappers

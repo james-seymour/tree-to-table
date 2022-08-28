@@ -6,6 +6,7 @@ from .mappers import (
     GetDefault,
     Choice,
     Nested,
+    Index,
     Replace,
     Coalesce,
     ContextChoice,
