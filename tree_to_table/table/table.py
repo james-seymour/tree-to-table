@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, Iterable
 
 from ..mappers import Mapper
 from ..transforms import Transform, OneToOneTransform
@@ -10,10 +10,11 @@ class Column:
 
 
 class Table:
-    _transform: Transform = OneToOneTransform()
+    transform: Transform = OneToOneTransform()
 
     @classmethod
     def mappers(cls) -> Dict[str, Mapper]:
+        "A mapping of all class variables defined on this table that are Mappers"
         return {
             column_name: mapper
             for column_name, mapper in cls.__dict__.items()
@@ -21,6 +22,6 @@ class Table:
         }
 
     @classmethod
-    def transform(cls, data: Any):
+    def map(cls, data: Iterable[Dict]):
         "The main entrypoint for transforming a set of data"
-        return cls._transform(cls.mappers(), data)
+        return cls.transform(cls.mappers(), data)
