@@ -1,4 +1,4 @@
-from .base import Mapper
+from .base import Mapper, identity, ignore_last_mapper
 
 from .mappers import (
     Apply,

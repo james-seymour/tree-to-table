@@ -43,3 +43,17 @@ class Mapper(MapperProtocol[Source, Result, FinalResult]):
         if value is None:
             return None
         return self.next(value)
+
+
+def ignore_last_mapper(mapper: Mapper):
+    def _ignore_last_mapper(m):
+        if m.next.next == identity:
+            m.next = identity
+        else:
+            _ignore_last_mapper(m.next)
+
+    from copy import deepcopy
+
+    mapper_copy = deepcopy(mapper)
+    _ignore_last_mapper(mapper_copy)
+    return mapper_copy
